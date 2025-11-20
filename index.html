@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="myCanvas" width="500" height="500" style="border:1px solid #000000;"></canvas><br>
+<button onclick="Lijevo()">Pomjeri se lijevo</button>
+<button onclick="Desno()">Pomjeri se desno</button>
+<button onclick="Gore()">Pomjeri se gore</button>
+<button onclick="Dole()">Pomjeri se dole</button>
+
+<img id="rattata" src="rattata.png" width="80" height="80" style="display:none;">
+</body>
+
+<script>
+const img = document.getElementById("rattata");
+const c = document.getElementById("myCanvas");
+const ctx = c.getContext("2d");
+
+let centarX = 50;
+let centarY = 50;
+
+// Crtanje mreže
+function nacrtajMrezu() {
+  for (let i = 100; i < 500; i += 100) {
+    ctx.moveTo(i, 0);
+    ctx.lineTo(i, 500);
+    ctx.moveTo(0, i);
+    ctx.lineTo(500, i);
+  }
+  ctx.stroke();
+}
+
+// Osvježavanje platna i crtanje lika
+function iscrtaj() {
+  ctx.clearRect(0, 0, 500, 500);
+  nacrtajMrezu();
+  ctx.drawImage(img, centarX - 25, centarY - 25, 50, 50);
+}
+
+function Lijevo() {
+  centarX = centarX !== 50 ? centarX - 100 : 450;
+  iscrtaj();
+}
+
+function Desno() {
+  centarX = centarX !== 450 ? centarX + 100 : 50;
+  iscrtaj();
+}
+
+function Gore() {
+  centarY = centarY !== 50 ? centarY - 100 : 450;
+  iscrtaj();
+}
+
+function Dole() {
+  centarY = centarY !== 450 ? centarY + 100 : 50;
+  iscrtaj();
+}
+
+img.onload = iscrtaj;
+</script>
+</html>
